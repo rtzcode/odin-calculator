@@ -11,9 +11,16 @@ const allButtons = document.querySelector(".buttons-container");
 
 operationBtnContainer.addEventListener("click", (e) => {
 	const id = e.target.id;
-	// num[0] can't be empty before selecting a operation
-	if (nums[0] !== "" && id !== "ac" && id !== "equal") {
-		return (operation = id);
+	const isItContainer = e.target.classList.contains("buttons");
+	if (
+		!isItContainer &&
+		nums[0] &&
+		!nums[1] &&
+		id !== "ac" &&
+		id !== "equal"
+	) {
+		operation = e.target.textContent;
+		displayDigits("sign");
 	}
 	// id === ac and equal are gonna have a function
 });
@@ -22,9 +29,13 @@ numbersBtnContainer.addEventListener("click", (e) => {
 	const id = e.target.id;
 	if (id !== "float" && id !== "backspace") {
 		const isItContainer = e.target.classList.contains("numbers");
-		if (!isItContainer) {
-			let pressedNumber = e.target.textContent;
+		let pressedNumber = e.target.textContent;
+		if (!isItContainer && !operation) {
 			nums[0] += pressedNumber;
+			displayDigits("num0");
+		} else if (!isItContainer && operation) {
+			nums[1] += pressedNumber;
+			displayDigits("num1");
 		}
 	}
 });
@@ -48,8 +59,7 @@ document.addEventListener("keydown", (e) => {
 	if (!operation && possibleNums.includes(pressedNumber)) {
 		nums[0] += pressedNumber;
 		displayDigits("num0");
-	}
-	if (operation && possibleNums.includes(pressedNumber)) {
+	} else if (operation && possibleNums.includes(pressedNumber)) {
 		nums[1] += pressedNumber;
 		displayDigits("num1");
 	}
@@ -57,6 +67,6 @@ document.addEventListener("keydown", (e) => {
 
 function displayDigits(change) {
 	if (change === "num0") num0ToDisplay.textContent = nums[0];
-	if (change === "num1") num1ToDisplay.textContent = nums[1];
-	if (change === "sign") signToDisplay.textContent = operation;
+	else if (change === "num1") num1ToDisplay.textContent = nums[1];
+	else if (change === "sign") signToDisplay.textContent = operation;
 }
