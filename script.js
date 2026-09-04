@@ -1,13 +1,13 @@
 let operation = "";
 let nums = ["", ""];
 
-const operationBtnContainer = document.querySelector(".wrapper");
-const numbersBtnContainer = document.querySelector(".numbers");
-const allButtons = document.querySelector(".buttons-container");
-
 const num0ToDisplay = document.querySelector("#num1");
 const num1ToDisplay = document.querySelector("#num2");
 const signToDisplay = document.querySelector("#actual-sign");
+
+const operationBtnContainer = document.querySelector(".wrapper");
+const numbersBtnContainer = document.querySelector(".numbers");
+const allButtons = document.querySelector(".buttons-container");
 
 operationBtnContainer.addEventListener("click", (e) => {
 	const id = e.target.id;
@@ -28,19 +28,35 @@ numbersBtnContainer.addEventListener("click", (e) => {
 		}
 	}
 });
-// To get operation, there are two event handlers for readability
+
 document.addEventListener("keydown", (e) => {
 	const possibleOperations = "+-*/";
 	const pressedOperation = e.key;
-	if (nums[0] !== "" && possibleOperations.includes(pressedOperation)) {
+	if (
+		nums[0] !== "" &&
+		!nums[1] &&
+		possibleOperations.includes(pressedOperation)
+	) {
 		operation = pressedOperation;
+		displayDigits("sign");
 	}
 });
 
 document.addEventListener("keydown", (e) => {
 	const possibleNums = "1234567890";
 	const pressedNumber = e.key;
-	if (possibleNums.includes(pressedNumber)) {
+	if (!operation && possibleNums.includes(pressedNumber)) {
 		nums[0] += pressedNumber;
+		displayDigits("num0");
+	}
+	if (operation && possibleNums.includes(pressedNumber)) {
+		nums[1] += pressedNumber;
+		displayDigits("num1");
 	}
 });
+
+function displayDigits(change) {
+	if (change === "num0") num0ToDisplay.textContent = nums[0];
+	if (change === "num1") num1ToDisplay.textContent = nums[1];
+	if (change === "sign") signToDisplay.textContent = operation;
+}
