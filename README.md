@@ -1,17 +1,11 @@
-# odin-calculator
+# TOP-Calculator
 
 Final project from foundations
 
-#Calculator features
+# Calculator features
 
-Basic operations
-
-- sum
-- rest
-- multiply
-- divide
-
-Backspace button
-Ac button
-Operate with decimals (only 3)
-Keyboard Support
+- Basic Operations
+- Backspace button
+- Ac button
+- Operate with decimals (only 3)
+- Keyboard Support
