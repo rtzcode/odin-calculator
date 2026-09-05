@@ -62,7 +62,11 @@ document.addEventListener("keydown", (e) => {
 		operation = pressedOperation;
 		displayDigits("sign");
 	} else if (pressedAction === "Backspace") {
-		deleteNumber();
+		if (e.ctrlKey) {
+			deleteAllAc();
+		} else {
+			deleteNumber();
+		}
 	} else if (pressedAction === "Enter") {
 		calculateResult();
 	} else if (pressedAction === "Delete") {
