@@ -10,17 +10,23 @@ const numbersBtnContainer = document.querySelector(".numbers");
 const allButtons = document.querySelector(".buttons-container");
 
 operationBtnContainer.addEventListener("click", (e) => {
-	const id = e.target.id;
+	const pressedOperation = e.target.textContent;
 	const isItContainer = e.target.classList.contains("buttons");
 	if (
 		!isItContainer &&
 		nums[0] &&
 		!nums[1] &&
-		id !== "ac" &&
-		id !== "equal"
+		pressedOperation !== "Ac" &&
+		pressedOperation !== "="
 	) {
 		operation = e.target.textContent;
 		displayDigits("sign");
+	}
+	if (pressedOperation === "=" && nums[1]) {
+		let result = calculate(operation, nums);
+		nums = [`${result}`, ""];
+		operation = "";
+		displayReset();
 	}
 	// id === ac and equal are gonna have a function
 });
@@ -69,4 +75,28 @@ function displayDigits(change) {
 	if (change === "num0") num0ToDisplay.textContent = nums[0];
 	else if (change === "num1") num1ToDisplay.textContent = nums[1];
 	else if (change === "sign") signToDisplay.textContent = operation;
+}
+
+function displayReset() {
+	num0ToDisplay.textContent = nums[0];
+	num1ToDisplay.textContent = "";
+	signToDisplay.textContent = "";
+}
+function calculate(operation, nums) {
+	if (nums[1]) {
+		switch (operation) {
+			case "+":
+				return nums.reduce((res, next) => res + next);
+				break;
+			case "-":
+				return nums.reduce((res, next) => res - next);
+				break;
+			case "*":
+				return nums.reduce((res, next) => res * next);
+				break;
+			case "/":
+				return nums.reduce((res, next) => res / next);
+				break;
+		}
+	}
 }
