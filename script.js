@@ -32,6 +32,7 @@ operationBtnContainer.addEventListener("click", (e) => {
 			nums = ["", ""];
 			operation = "";
 			displayReset();
+			num0ToDisplay.textContent = "0";
 		}
 	}
 });
