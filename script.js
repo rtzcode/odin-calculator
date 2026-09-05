@@ -11,23 +11,28 @@ const allButtons = document.querySelector(".buttons-container");
 
 operationBtnContainer.addEventListener("click", (e) => {
 	const pressedOperation = e.target.textContent;
-	const isItContainer = e.target.classList.contains("buttons");
-	if (
-		!isItContainer &&
-		nums[0] &&
-		!nums[1] &&
-		pressedOperation !== "Ac" &&
-		pressedOperation !== "="
-	) {
-		operation = e.target.textContent;
-		displayDigits("sign");
-	} else if (pressedOperation === "=" && nums[1]) {
-		let result = calculate(operation, nums);
-		nums = [`${result}`, ""];
-		operation = "";
-		displayReset();
-	} else if (pressedOperation === "Ac") {
-		deleteNumbers();
+	const isItContainer =
+		e.target.classList.contains("buttons") ||
+		e.target.classList.contains("wrapper");
+	if (!isItContainer) {
+		if (
+			nums[0] &&
+			!nums[1] &&
+			pressedOperation !== "Ac" &&
+			pressedOperation !== "="
+		) {
+			operation = e.target.textContent;
+			displayDigits("sign");
+		} else if (pressedOperation === "=" && nums[1]) {
+			let result = calculate(operation, nums);
+			nums = [`${result}`, ""];
+			operation = "";
+			displayReset();
+		} else if (pressedOperation === "Ac") {
+			nums = ["", ""];
+			operation = "";
+			displayReset();
+		}
 	}
 });
 
@@ -43,6 +48,8 @@ numbersBtnContainer.addEventListener("click", (e) => {
 			nums[1] += pressedNumber;
 			displayDigits("num1");
 		}
+	} else if (id === "backspace") {
+		deleteNumber();
 	}
 });
 
@@ -71,7 +78,7 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
-function deleteNumbers() {
+function deleteNumber() {
 	if (nums[1]) {
 		nums[1] = nums[1].slice(0, nums[1].length - 1);
 		displayDigits("num1");
@@ -97,6 +104,7 @@ function displayReset() {
 }
 
 function calculate(operation, nums) {
+	nums = nums.map((string) => +string);
 	if (nums[1]) {
 		switch (operation) {
 			case "+":
