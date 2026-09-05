@@ -11,5 +11,7 @@ Basic operations
 - multiply
 - divide
 
-Back button and delete button
-Add floating numbers
+Backspace button
+Ac button
+Operate with decimals (only 3)
+Keyboard Support
