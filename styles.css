@@ -83,6 +83,7 @@ button {
 
 #ac {
 	flex: 1;
+	text-transform: uppercase;
 }
 
 #add {

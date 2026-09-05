@@ -29,7 +29,7 @@ operationBtnContainer.addEventListener("click", (e) => {
 				if (Number.isInteger(result)) {
 					nums = [`${result}`, ""];
 				} else {
-					nums = [`${result.toFixed(2)}`, ""];
+					nums = [`${result.toFixed(3)}`, ""];
 				}
 				operation = "";
 				displayReset();
