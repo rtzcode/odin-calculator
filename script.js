@@ -58,7 +58,7 @@ numbersBtnContainer.addEventListener("click", (e) => {
 	} else if (id === "backspace") {
 		deleteNumber();
 	} else if (id === "float") {
-		if (!nums[1] && !nums[0].includes(".")) {
+		if (!operation && !nums[1] && !nums[0].includes(".")) {
 			if (nums[0].length === 0) {
 				nums[0] += "0.";
 				displayDigits("num0");
@@ -66,7 +66,8 @@ numbersBtnContainer.addEventListener("click", (e) => {
 				nums[0] += ".";
 				displayDigits("num0");
 			}
-		} else if (operation && !nums[1].includes(".")) {
+		}
+		if (operation && !nums[1].includes(".")) {
 			if (nums[1].length === 0) {
 				nums[1] += "0.";
 				displayDigits("num1");
