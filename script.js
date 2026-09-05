@@ -31,19 +31,6 @@ operationBtnContainer.addEventListener("click", (e) => {
 	}
 });
 
-function deleteNumbers() {
-	if (nums[1]) {
-		nums[1] = "";
-		displayDigits("num1");
-	} else if (!nums[1] && operation) {
-		operation = "";
-		displayDigits("sign");
-	} else if (!operation && !nums[1]) {
-		nums[0] = "";
-		displayDigits("num0");
-	}
-}
-
 numbersBtnContainer.addEventListener("click", (e) => {
 	const id = e.target.id;
 	if (id !== "float" && id !== "backspace") {
@@ -84,6 +71,19 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
+function deleteNumbers() {
+	if (nums[1]) {
+		nums[1] = nums[1].slice(0, nums[1].length - 1);
+		displayDigits("num1");
+	} else if (!nums[1] && operation) {
+		operation = "";
+		displayDigits("sign");
+	} else if (!operation && !nums[1]) {
+		nums[0] = nums[0].slice(0, nums[0].length - 1);
+		displayDigits("num0");
+	}
+}
+
 function displayDigits(change) {
 	if (change === "num0") num0ToDisplay.textContent = nums[0];
 	else if (change === "num1") num1ToDisplay.textContent = nums[1];
@@ -95,6 +95,7 @@ function displayReset() {
 	num1ToDisplay.textContent = "";
 	signToDisplay.textContent = "";
 }
+
 function calculate(operation, nums) {
 	if (nums[1]) {
 		switch (operation) {
