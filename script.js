@@ -21,15 +21,28 @@ operationBtnContainer.addEventListener("click", (e) => {
 	) {
 		operation = e.target.textContent;
 		displayDigits("sign");
-	}
-	if (pressedOperation === "=" && nums[1]) {
+	} else if (pressedOperation === "=" && nums[1]) {
 		let result = calculate(operation, nums);
 		nums = [`${result}`, ""];
 		operation = "";
 		displayReset();
+	} else if (pressedOperation === "Ac") {
+		deleteNumbers();
 	}
-	// id === ac and equal are gonna have a function
 });
+
+function deleteNumbers() {
+	if (nums[1]) {
+		nums[1] = "";
+		displayDigits("num1");
+	} else if (!nums[1] && operation) {
+		operation = "";
+		displayDigits("sign");
+	} else if (!operation && !nums[1]) {
+		nums[0] = "";
+		displayDigits("num0");
+	}
+}
 
 numbersBtnContainer.addEventListener("click", (e) => {
 	const id = e.target.id;
