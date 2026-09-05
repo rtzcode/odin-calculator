@@ -26,7 +26,11 @@ operationBtnContainer.addEventListener("click", (e) => {
 		} else if (pressedOperation === "=" && nums[1]) {
 			let result = calculate(operation, nums);
 			if (result) {
-				nums = [`${result}`, ""];
+				if (Number.isInteger(result)) {
+					nums = [`${result}`, ""];
+				} else {
+					nums = [`${result.toFixed(2)}`, ""];
+				}
 				operation = "";
 				displayReset();
 			}
