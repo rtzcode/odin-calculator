@@ -25,9 +25,11 @@ operationBtnContainer.addEventListener("click", (e) => {
 			displayDigits("sign");
 		} else if (pressedOperation === "=" && nums[1]) {
 			let result = calculate(operation, nums);
-			nums = [`${result}`, ""];
-			operation = "";
-			displayReset();
+			if (result) {
+				nums = [`${result}`, ""];
+				operation = "";
+				displayReset();
+			}
 		} else if (pressedOperation === "Ac") {
 			nums = ["", ""];
 			operation = "";
@@ -52,7 +54,23 @@ numbersBtnContainer.addEventListener("click", (e) => {
 	} else if (id === "backspace") {
 		deleteNumber();
 	} else if (id === "float") {
-		num[0];
+		if (!nums[1] && !nums[0].includes(".")) {
+			if (nums[0].length === 0) {
+				nums[0] += "0.";
+				displayDigits("num0");
+			} else {
+				nums[0] += ".";
+				displayDigits("num0");
+			}
+		} else if (operation && !nums[1].includes(".")) {
+			if (nums[1].length === 0) {
+				nums[1] += "0.";
+				displayDigits("num1");
+			} else {
+				nums[1] += ".";
+				displayDigits("num1");
+			}
+		}
 	}
 });
 
