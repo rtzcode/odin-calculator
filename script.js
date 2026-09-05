@@ -24,21 +24,9 @@ operationBtnContainer.addEventListener("click", (e) => {
 			operation = e.target.textContent;
 			displayDigits("sign");
 		} else if (pressedOperation === "=" && nums[1]) {
-			let result = calculate(operation, nums);
-			if (result) {
-				if (Number.isInteger(result)) {
-					nums = [`${result}`, ""];
-				} else {
-					nums = [`${result.toFixed(3)}`, ""];
-				}
-				operation = "";
-				displayReset();
-			}
+			calculateResult();
 		} else if (pressedOperation === "Ac") {
-			nums = ["", ""];
-			operation = "";
-			displayReset();
-			num0ToDisplay.textContent = "0";
+			deleteAllAc();
 		}
 	}
 });
@@ -58,30 +46,14 @@ numbersBtnContainer.addEventListener("click", (e) => {
 	} else if (id === "backspace") {
 		deleteNumber();
 	} else if (id === "float") {
-		if (!operation && !nums[1] && !nums[0].includes(".")) {
-			if (nums[0].length === 0) {
-				nums[0] += "0.";
-				displayDigits("num0");
-			} else {
-				nums[0] += ".";
-				displayDigits("num0");
-			}
-		}
-		if (operation && !nums[1].includes(".")) {
-			if (nums[1].length === 0) {
-				nums[1] += "0.";
-				displayDigits("num1");
-			} else {
-				nums[1] += ".";
-				displayDigits("num1");
-			}
-		}
+		addDecimals();
 	}
 });
 
 document.addEventListener("keydown", (e) => {
 	const possibleOperations = "+-*/";
 	const pressedOperation = e.key;
+	const pressedAction = e.key;
 	if (
 		nums[0] !== "" &&
 		!nums[1] &&
@@ -89,6 +61,14 @@ document.addEventListener("keydown", (e) => {
 	) {
 		operation = pressedOperation;
 		displayDigits("sign");
+	} else if (pressedAction === "Backspace") {
+		deleteNumber();
+	} else if (pressedAction === "Enter") {
+		calculateResult();
+	} else if (pressedAction === "Delete") {
+		deleteAllAc();
+	} else if (pressedAction === ".") {
+		addDecimals();
 	}
 });
 
@@ -120,6 +100,34 @@ function deleteNumber() {
 	}
 }
 
+function addDecimals() {
+	if (!operation && !nums[1] && !nums[0].includes(".")) {
+		if (nums[0].length === 0) {
+			nums[0] += "0.";
+			displayDigits("num0");
+		} else {
+			nums[0] += ".";
+			displayDigits("num0");
+		}
+	}
+	if (operation && !nums[1].includes(".")) {
+		if (nums[1].length === 0) {
+			nums[1] += "0.";
+			displayDigits("num1");
+		} else {
+			nums[1] += ".";
+			displayDigits("num1");
+		}
+	}
+}
+
+function deleteAllAc() {
+	nums = ["", ""];
+	operation = "";
+	displayReset();
+	num0ToDisplay.textContent = "0";
+}
+
 function displayDigits(change) {
 	if (change === "num0") num0ToDisplay.textContent = nums[0];
 	else if (change === "num1") num1ToDisplay.textContent = nums[1];
@@ -132,22 +140,31 @@ function displayReset() {
 	signToDisplay.textContent = "";
 }
 
-function calculate(operation, nums) {
+function calculateResult() {
+	let result = calculateNumbers(operation, nums);
+	if (result) {
+		if (Number.isInteger(result)) {
+			nums = [`${result}`, ""];
+		} else {
+			nums = [`${result.toFixed(3)}`, ""];
+		}
+		operation = "";
+		displayReset();
+	}
+}
+
+function calculateNumbers(operation, nums) {
 	nums = nums.map((string) => +string);
 	if (nums[1]) {
 		switch (operation) {
 			case "+":
 				return nums.reduce((res, next) => res + next);
-				break;
 			case "-":
 				return nums.reduce((res, next) => res - next);
-				break;
 			case "*":
 				return nums.reduce((res, next) => res * next);
-				break;
 			case "/":
 				return nums.reduce((res, next) => res / next);
-				break;
 		}
 	}
 }
