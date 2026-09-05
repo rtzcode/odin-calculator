@@ -51,6 +51,8 @@ numbersBtnContainer.addEventListener("click", (e) => {
 		}
 	} else if (id === "backspace") {
 		deleteNumber();
+	} else if (id === "float") {
+		num[0];
 	}
 });
 
@@ -89,6 +91,9 @@ function deleteNumber() {
 	} else if (!operation && !nums[1]) {
 		nums[0] = nums[0].slice(0, nums[0].length - 1);
 		displayDigits("num0");
+		if (nums[0] === "") {
+			num0ToDisplay.textContent = "0";
+		}
 	}
 }
 
