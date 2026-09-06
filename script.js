@@ -180,6 +180,26 @@ document.addEventListener("keydown", (e) => {
 			num0ToDisplay.textContent = `You can't divide by 0`;
 		}
 	}
+	if (pressedOperation === ".") {
+		if (!operation && !nums[1] && !nums[0].includes(".")) {
+			if (nums[0].length === 0) {
+				nums[0] += "0.";
+				displayDigits("num0");
+			} else {
+				nums[0] += ".";
+				displayDigits("num0");
+			}
+		}
+		if (operation && !nums[1].includes(".")) {
+			if (nums[1].length === 0) {
+				nums[1] += "0.";
+				displayDigits("num1");
+			} else {
+				nums[1] += ".";
+				displayDigits("num1");
+			}
+		}
+	}
 });
 
 document.addEventListener("keydown", (e) => {
