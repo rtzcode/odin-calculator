@@ -1,15 +1,9 @@
-# odin-calculator
-
 Final project from foundations
 
-#Calculator features
+# Calculator features
 
-Basic operations
-
-- sum
-- rest
-- multiply
-- divide
-
-Back button and delete button
-Add floating numbers
+- Basic Operations
+- Backspace button
+- Ac button
+- Operate with decimals (only 3)
+- Keyboard Support

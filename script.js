@@ -52,6 +52,7 @@ operationBtnContainer.addEventListener("click", (e) => {
 				displayReset();
 				displayDigits("sign");
 				operation = e.target.textContent;
+				displayDigits("sign");
 			} else if (typeof result === "undefined") {
 				operation = "";
 				nums = ["", ""];
@@ -140,7 +141,14 @@ document.addEventListener("keydown", (e) => {
 		displayDigits("sign");
 	}
 	if (pressedOperation === "Backspace") {
-		deleteNumber();
+		if (e.ctrlKey) {
+			nums = ["", ""];
+			operation = "";
+			displayReset();
+			num0ToDisplay.textContent = "0";
+		} else {
+			deleteNumber();
+		}
 	}
 	if (nums[0] && nums[1] && possibleOperations.includes(pressedOperation)) {
 		let result = calculate(operation, nums);
