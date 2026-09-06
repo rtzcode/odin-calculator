@@ -1,6 +1,5 @@
 let operation = "";
 let resultOpe;
-let showingResult = false;
 let nums = ["", ""];
 
 const num0ToDisplay = document.querySelector("#num1");
@@ -62,16 +61,14 @@ operationBtnContainer.addEventListener("click", (e) => {
 		} else if (pressedOperation === "=" && nums[1]) {
 			resultOpe = calculate(operation, nums);
 			if (typeof resultOpe !== "undefined") {
-				if (Number.isInteger(resultOpe)) {
-					nums = [`${resultOpe}`, ""];
-				} else {
-					nums = [`${resultOpe.toFixed(2)}`, ""];
-				}
 				operation = "";
 				nums = ["", ""];
-				showingResult = true;
 				displayReset();
-				num0ToDisplay.textContent = `${resultOpe}`;
+				if (Number.isInteger(resultOpe)) {
+					num0ToDisplay.textContent = `${resultOpe}`;
+				} else {
+					num0ToDisplay.textContent = `${resultOpe.toFixed(2)}`;
+				}
 			} else if (typeof resultOpe === "undefined") {
 				operation = "";
 				nums = ["", ""];
@@ -149,6 +146,7 @@ document.addEventListener("keydown", (e) => {
 			} else {
 				nums = [`${result.toFixed(2)}`, ""];
 			}
+
 			operation = pressedOperation;
 			displayReset();
 			displayDigits("sign");
@@ -163,16 +161,14 @@ document.addEventListener("keydown", (e) => {
 		nums = nums.map((string) => +string);
 		resultOpe = calculate(operation, nums);
 		if (typeof resultOpe !== "undefined") {
-			if (Number.isInteger(resultOpe)) {
-				nums = [`${resultOpe}`, ""];
-			} else {
-				nums = [`${resultOpe.toFixed(2)}`, ""];
-			}
 			operation = "";
 			nums = ["", ""];
-			showingResult = true;
 			displayReset();
-			num0ToDisplay.textContent = `${resultOpe}`;
+			if (Number.isInteger(resultOpe)) {
+				num0ToDisplay.textContent = `${resultOpe}`;
+			} else {
+				num0ToDisplay.textContent = `${resultOpe.toFixed(2)}`;
+			}
 		} else if (typeof resultOpe === "undefined") {
 			operation = "";
 			nums = ["", ""];
