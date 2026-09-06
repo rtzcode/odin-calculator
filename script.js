@@ -11,6 +11,12 @@ const operationBtnContainer = document.querySelector(".wrapper");
 const numbersBtnContainer = document.querySelector(".numbers");
 const allButtons = document.querySelector(".buttons-container");
 
+document
+	.querySelectorAll("button")
+	.forEach((button) =>
+		button.addEventListener("mousedown", (e) => e.preventDefault()),
+	);
+
 operationBtnContainer.addEventListener("click", (e) => {
 	const pressedOperation = e.target.textContent;
 	const isItContainer =
@@ -120,6 +126,10 @@ numbersBtnContainer.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
 	const possibleOperations = "+-*/";
 	const pressedOperation = e.key;
+	if (!nums[0] && !operation && !nums[1]) {
+		displayReset();
+		num0ToDisplay.textContent = "Enter some digits";
+	}
 	if (
 		nums[0] !== "" &&
 		!nums[1] &&
@@ -127,6 +137,48 @@ document.addEventListener("keydown", (e) => {
 	) {
 		operation = pressedOperation;
 		displayDigits("sign");
+	}
+	if (pressedOperation === "Backspace") {
+		deleteNumber();
+	}
+	if (nums[0] && nums[1] && possibleOperations.includes(pressedOperation)) {
+		let result = calculate(operation, nums);
+		if (typeof result !== "undefined") {
+			if (Number.isInteger(result)) {
+				nums = [`${result}`, ""];
+			} else {
+				nums = [`${result.toFixed(2)}`, ""];
+			}
+			operation = pressedOperation;
+			displayReset();
+			displayDigits("sign");
+		} else if (typeof result === "undefined") {
+			operation = "";
+			nums = ["", ""];
+			displayReset();
+			num0ToDisplay.textContent = `You can't divide by 0`;
+		}
+	}
+	if (pressedOperation === "Enter" && nums[1] && operation) {
+		nums = nums.map((string) => +string);
+		resultOpe = calculate(operation, nums);
+		if (typeof resultOpe !== "undefined") {
+			if (Number.isInteger(resultOpe)) {
+				nums = [`${resultOpe}`, ""];
+			} else {
+				nums = [`${resultOpe.toFixed(2)}`, ""];
+			}
+			operation = "";
+			nums = ["", ""];
+			showingResult = true;
+			displayReset();
+			num0ToDisplay.textContent = `${resultOpe}`;
+		} else if (typeof resultOpe === "undefined") {
+			operation = "";
+			nums = ["", ""];
+			displayReset();
+			num0ToDisplay.textContent = `You can't divide by 0`;
+		}
 	}
 });
 
