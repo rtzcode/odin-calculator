@@ -90,11 +90,15 @@ numbersBtnContainer.addEventListener("click", (e) => {
 		const isItContainer = e.target.classList.contains("numbers");
 		let pressedNumber = e.target.textContent;
 		if (!isItContainer && !operation) {
-			nums[0] += pressedNumber;
-			displayDigits("num0");
+			if (nums[0].length < 20) {
+				nums[0] += pressedNumber;
+				displayDigits("num0");
+			}
 		} else if (!isItContainer && operation) {
-			nums[1] += pressedNumber;
-			displayDigits("num1");
+			if (nums[1].length < 20) {
+				nums[1] += pressedNumber;
+				displayDigits("num1");
+			}
 		}
 	} else if (id === "backspace") {
 		deleteNumber();
@@ -201,10 +205,18 @@ document.addEventListener("keydown", (e) => {
 document.addEventListener("keydown", (e) => {
 	const possibleNums = "1234567890";
 	const pressedNumber = e.key;
-	if (!operation && possibleNums.includes(pressedNumber)) {
+	if (
+		!operation &&
+		possibleNums.includes(pressedNumber) &&
+		nums[0].length < 20
+	) {
 		nums[0] += pressedNumber;
 		displayDigits("num0");
-	} else if (operation && possibleNums.includes(pressedNumber)) {
+	} else if (
+		operation &&
+		possibleNums.includes(pressedNumber) &&
+		nums[1].length < 20
+	) {
 		nums[1] += pressedNumber;
 		displayDigits("num1");
 	}
