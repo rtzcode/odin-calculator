@@ -38,7 +38,7 @@ operationBtnContainer.addEventListener("click", (e) => {
 			pressedOperation !== "="
 		) {
 			let result = calculate(operation, nums);
-			if (result) {
+			if (typeof result !== "undefined") {
 				if (Number.isInteger(result)) {
 					nums = [`${result}`, ""];
 				} else {
@@ -47,6 +47,11 @@ operationBtnContainer.addEventListener("click", (e) => {
 				displayReset();
 				displayDigits("sign");
 				operation = e.target.textContent;
+			} else if (typeof result === "undefined") {
+				operation = "";
+				nums = ["", ""];
+				displayReset();
+				num0ToDisplay.textContent = `You can't divide by 0`;
 			}
 		} else if (pressedOperation === "=" && nums[1]) {
 			resultOpe = calculate(operation, nums);
@@ -54,13 +59,18 @@ operationBtnContainer.addEventListener("click", (e) => {
 				if (Number.isInteger(resultOpe)) {
 					nums = [`${resultOpe}`, ""];
 				} else {
-					nums = [`${resultOpe.toFixed(3)}`, ""];
+					nums = [`${resultOpe.toFixed(2)}`, ""];
 				}
 				operation = "";
 				nums = ["", ""];
 				showingResult = true;
 				displayReset();
 				num0ToDisplay.textContent = `${resultOpe}`;
+			} else if (typeof resultOpe === "undefined") {
+				operation = "";
+				nums = ["", ""];
+				displayReset();
+				num0ToDisplay.textContent = `You can't divide by 0`;
 			}
 		} else if (pressedOperation === "Ac") {
 			nums = ["", ""];
