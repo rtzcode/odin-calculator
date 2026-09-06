@@ -1,4 +1,6 @@
 let operation = "";
+let resultOpe;
+let showingResult = false;
 let nums = ["", ""];
 
 const num0ToDisplay = document.querySelector("#num1");
@@ -24,15 +26,18 @@ operationBtnContainer.addEventListener("click", (e) => {
 			operation = e.target.textContent;
 			displayDigits("sign");
 		} else if (pressedOperation === "=" && nums[1]) {
-			let result = calculate(operation, nums);
-			if (result) {
-				if (Number.isInteger(result)) {
-					nums = [`${result}`, ""];
+			resultOpe = calculate(operation, nums);
+			if (typeof resultOpe !== "undefined") {
+				if (Number.isInteger(resultOpe)) {
+					nums = [`${resultOpe}`, ""];
 				} else {
-					nums = [`${result.toFixed(3)}`, ""];
+					nums = [`${resultOpe.toFixed(3)}`, ""];
 				}
 				operation = "";
+				nums = ["", ""];
+				showingResult = true;
 				displayReset();
+				num0ToDisplay.textContent = `${resultOpe}`;
 			}
 		} else if (pressedOperation === "Ac") {
 			nums = ["", ""];
