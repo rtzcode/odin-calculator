@@ -1,5 +1,3 @@
-# TOP-Calculator
-
 Final project from foundations
 
 # Calculator features
