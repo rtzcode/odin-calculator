@@ -17,6 +17,10 @@ operationBtnContainer.addEventListener("click", (e) => {
 		e.target.classList.contains("buttons") ||
 		e.target.classList.contains("wrapper");
 	if (!isItContainer) {
+		if (!operation && !nums[0]) {
+			displayReset();
+			num0ToDisplay.textContent = "Enter some digits";
+		}
 		if (
 			nums[0] &&
 			!nums[1] &&
@@ -25,6 +29,25 @@ operationBtnContainer.addEventListener("click", (e) => {
 		) {
 			operation = e.target.textContent;
 			displayDigits("sign");
+		}
+		if (
+			nums[0] &&
+			nums[1] &&
+			operation &&
+			pressedOperation !== "Ac" &&
+			pressedOperation !== "="
+		) {
+			let result = calculate(operation, nums);
+			if (result) {
+				if (Number.isInteger(result)) {
+					nums = [`${result}`, ""];
+				} else {
+					nums = [`${result.toFixed(2)}`, ""];
+				}
+				displayReset();
+				displayDigits("sign");
+				operation = e.target.textContent;
+			}
 		} else if (pressedOperation === "=" && nums[1]) {
 			resultOpe = calculate(operation, nums);
 			if (typeof resultOpe !== "undefined") {
